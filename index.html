@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenAI-DST for ELE - Complete Interactive Learning Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif, 'Noto Sans SC', sans-serif;
+            background-color: #f8fafc;
+            background-image: radial-gradient(#e2e8f0 0.8px, transparent 0.8px);
+            background-size: 20px 20px;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #10b981, #06b6d4, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .feature-card.emerald-glow:hover { box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.1), 0 10px 10px -5px rgba(16, 185, 129, 0.08), 0 0 30px -10px #10b981; }
+        .feature-card.cyan-glow:hover { box-shadow: 0 20px 25px -5px rgba(6, 182, 212, 0.1), 0 10px 10px -5px rgba(6, 182, 212, 0.08), 0 0 30px -10px #06b6d4; }
+        .feature-card.indigo-glow:hover { box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.1), 0 10px 10px -5px rgba(99, 102, 241, 0.08), 0 0 30px -10px #6366f1; }
+        .feature-card.blue-glow:hover { box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.1), 0 10px 10px -5px rgba(59, 130, 246, 0.08), 0 0 30px -10px #3b82f6; }
+
+        .multimodal-btn {
+            background-color: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+            transition: all 0.2s ease-in-out;
+        }
+        .multimodal-btn.active, .multimodal-btn:hover {
+            background-color: #e0f2f1;
+            color: #0d9488;
+            border-color: #5eead4;
+        }
+        .clean-bg {
+            background-image: none;
+            background-color: white;
+        }
+        .slate-bg {
+            background-image: radial-gradient(#e2e8f0 0.8px, transparent 0.8px);
+            background-color: #f8fafc;
+        }
+
+        .accordion-item {
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .accordion-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .accordion-header {
+            cursor: pointer;
+            user-select: none;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 600px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .accordion-item.active .accordion-header span {
+            transform: rotate(180deg);
+        }
+
+        .draggable {
+            cursor: move;
+            transition: transform 0.2s ease;
+        }
+        .draggable:hover {
+            transform: scale(1.02);
+        }
+        .drop-zone {
+            min-height: 100px;
+            border: 2px dashed #d1d5db;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+        .drop-zone.drag-over {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .drop-zone.correct {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        .drop-zone.incorrect {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+
+        .content-type-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .content-type-btn:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+        .content-type-btn.active {
+            background: #6366f1;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .copy-success {
+            background: #059669 !important;
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-bold text-gray-800">
+                    <span class="text-emerald-500">GenAI-DST</span> for ELE
+                </div>
+                <nav class="hidden md:flex space-x-8 text-gray-600 font-medium">
+                    <a href="#home" class="hover:text-emerald-500 transition-colors">Home</a>
+                    <a href="#hub" class="hover:text-emerald-500 transition-colors">Learning Hub</a>
+                    <a href="#research" class="hover:text-emerald-500 transition-colors">Join Research</a>
+                    <a href="#community" class="hover:text-emerald-500 transition-colors">Community</a>
+                    <a href="#contact" class="hover:text-emerald-500 transition-colors">Contact</a>
+                </nav>
+                <button class="md:hidden" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-gray-800 text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section id="home" class="py-20 md:py-32 slate-bg">
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+                        Empowering <span class="gradient-text">English Language Education</span><br>through <span class="gradient-text">Generative AI-powered Digital Storytelling</span>
+                    </h1>
+                    <p class="mt-6 text-base text-gray-600 max-w-xl mx-auto md:mx-0">
+                        A research-practice collaborative project aimed at empowering primary and secondary students in Hong Kong and overseas. We are committed to fostering students' <strong class="text-emerald-600">creative autonomy</strong>, <strong class="text-cyan-600">critical AI literacy</strong>, and <strong class="text-indigo-600">English narrative literacy</strong> through creative storytelling.
+                    </p>
+                    <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#project-framework" class="bg-indigo-500 text-white font-bold px-8 py-3 rounded-lg hover:bg-indigo-600 transition-transform transform hover:scale-105 shadow-lg">
+                            Project Framework
+                        </a>
+                        <a href="#hub" class="bg-emerald-500 text-white font-bold px-8 py-3 rounded-lg hover:bg-emerald-600 transition-transform transform hover:scale-105 shadow-lg">
+                            Explore Learning Hub
+                        </a>
+                        <a href="#research" class="bg-white text-gray-700 font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors border border-gray-300 shadow-sm">
+                            Join Our Research
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:flex flex-col gap-4">
+                    <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=2873&auto=format&fit=crop&ixlib=rb-4.0.3" alt="An open book symbolizing knowledge and learning" class="rounded-2xl shadow-xl object-cover w-full h-52">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Digital storytelling tools representing technology and creativity" class="rounded-2xl shadow-xl object-cover w-full h-52">
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Framework Section -->
+        <section id="project-framework" class="py-20 clean-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Project Framework</h2>
+                    <p class="mt-4 text-base text-gray-600">A comprehensive theoretical framework integrating digital storytelling principles with AI collaboration and value-based education capabilities.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="text-center mb-8">
+                            <div class="bg-gray-100 rounded-xl p-8 mx-auto max-w-5xl">
+                                <div class="text-center text-gray-600">
+                                    <i class="fas fa-image text-6xl mb-4"></i>
+                                    <p>Theoretical Framework Diagram</p>
+                                    <p class="text-sm mt-2">(Original image: GEN-DST PROJECT Theoretical framework1010.png)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- Basic Concepts -->
+                            <div class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+                                <button class="accordion-header w-full text-left p-6 flex justify-between items-center bg-gray-100 hover:bg-gray-200 transition duration-300" onclick="toggleAccordion(this)">
+                                    <h2 class="text-xl font-semibold text-gray-800"><i class="fas fa-book-open mr-3 text-gray-600"></i>Basic Concepts: AI, Large Language Models, and Digital Storytelling</h2>
+                                    <span class="text-2xl text-gray-600 transform transition-transform duration-300">&#9662;</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="p-6 bg-white">
+                                        <h3 class="text-lg font-semibold mb-4 text-emerald-600">Understanding AI and Large Language Models</h3>
+                                        <p class="text-gray-700 mb-4">Artificial Intelligence (AI) represents computer systems that can perform tasks typically requiring human intelligence. Large Language Models (LLMs) like GPT are AI systems trained on vast amounts of text data to understand and generate human-like language.</p>
+                                        
+                                        <h3 class="text-lg font-semibold mb-4 text-cyan-600">Digital Storytelling in Education</h3>
+                                        <p class="text-gray-700 mb-4">Digital storytelling combines traditional narrative techniques with digital media tools, enabling students to create compelling stories using multimedia elements like text, images, audio, and video.</p>
+                                        
+                                        <h3 class="text-lg font-semibold mb-4 text-indigo-600">The Intersection: AI-Powered Learning</h3>
+                                        <p class="text-gray-700">When AI meets digital storytelling in education, it creates unprecedented opportunities for personalized learning, creative expression, and critical thinking development.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Learning Objectives -->
+                            <div class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+                                <button class="accordion-header w-full text-left p-6 flex justify-between items-center bg-gray-100 hover:bg-gray-200 transition duration-300" onclick="toggleAccordion(this)">
+                                    <h2 class="text-xl font-semibold text-gray-800"><i class="fas fa-target mr-3 text-gray-600"></i>Learning Objectives and Outcomes</h2>
+                                    <span class="text-2xl text-gray-600 transform transition-transform duration-300">&#9662;</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="p-6 bg-white">
+                                        <div class="grid md:grid-cols-3 gap-6">
+                                            <div class="text-center">
+                                                <div class="bg-emerald-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                                    <i class="fas fa-lightbulb text-emerald-600 text-2xl"></i>
+                                                </div>
+                                                <h3 class="text-lg font-semibold text-emerald-600 mb-2">Creative Autonomy</h3>
+                                                <p class="text-gray-700 text-sm">Empowering students to make independent creative decisions and develop their unique storytelling voice.</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <div class="bg-cyan-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                                    <i class="fas fa-brain text-cyan-600 text-2xl"></i>
+                                                </div>
+                                                <h3 class="text-lg font-semibold text-cyan-600 mb-2">Critical AI Literacy</h3>
+                                                <p class="text-gray-700 text-sm">Building understanding of AI capabilities, limitations, and ethical considerations in creative processes.</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <div class="bg-indigo-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                                    <i class="fas fa-book text-indigo-600 text-2xl"></i>
+                                                </div>
+                                                <h3 class="text-lg font-semibold text-indigo-600 mb-2">English Narrative Literacy</h3>
+                                                <p class="text-gray-700 text-sm">Enhancing English language skills through structured storytelling and narrative construction.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedagogical Approach -->
+                            <div class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+                                <button class="accordion-header w-full text-left p-6 flex justify-between items-center bg-gray-100 hover:bg-gray-200 transition duration-300" onclick="toggleAccordion(this)">
+                                    <h2 class="text-xl font-semibold text-gray-800"><i class="fas fa-chalkboard-teacher mr-3 text-gray-600"></i>Pedagogical Approach and Methodology</h2>
+                                    <span class="text-2xl text-gray-600 transform transition-transform duration-300">&#9662;</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="p-6 bg-white">
+                                        <h3 class="text-lg font-semibold mb-4 text-blue-600">Collaborative Learning Framework</h3>
+                                        <p class="text-gray-700 mb-4">Our approach emphasizes collaboration between students, AI tools, and educators, creating a supportive learning ecosystem that promotes both individual growth and collective knowledge building.</p>
+                                        
+                                        <h3 class="text-lg font-semibold mb-4 text-purple-600">Scaffolded Learning Process</h3>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                            <li>Introduction to AI concepts and digital storytelling basics</li>
+                                            <li>Guided practice with AI-assisted story creation</li>
+                                            <li>Independent project development with peer feedback</li>
+                                            <li>Reflection and critical evaluation of AI collaboration</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Hub Section -->
+        <section id="hub" class="py-20 slate-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Interactive Learning Hub</h2>
+                    <p class="mt-4 text-base text-gray-600">Explore our comprehensive learning modules designed to enhance your digital storytelling skills with AI collaboration.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <div class="feature-card emerald-glow">
+                        <div class="text-center">
+                            <div class="bg-emerald-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-robot text-emerald-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">AI Collaboration Basics</h3>
+                            <p class="text-gray-600 mb-4">Learn fundamental concepts of working with AI tools for creative storytelling and content generation.</p>
+                        </div>
+                        <button class="content-type-btn w-full" onclick="showContent('ai-basics')">
+                            <i class="fas fa-play"></i>
+                            Start Learning
+                        </button>
+                    </div>
+
+                    <div class="feature-card cyan-glow">
+                        <div class="text-center">
+                            <div class="bg-cyan-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-pen-fancy text-cyan-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Digital Storytelling</h3>
+                            <p class="text-gray-600 mb-4">Master the art of creating compelling narratives using digital tools and multimedia elements.</p>
+                        </div>
+                        <button class="content-type-btn w-full" onclick="showContent('storytelling')">
+                            <i class="fas fa-play"></i>
+                            Start Learning
+                        </button>
+                    </div>
+
+                    <div class="feature-card indigo-glow">
+                        <div class="text-center">
+                            <div class="bg-indigo-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-puzzle-piece text-indigo-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Interactive Exercises</h3>
+                            <p class="text-gray-600 mb-4">Practice your skills with hands-on exercises and receive immediate feedback on your progress.</p>
+                        </div>
+                        <button class="content-type-btn w-full" onclick="showContent('exercises')">
+                            <i class="fas fa-play"></i>
+                            Start Learning
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive Story Exercise -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Interactive Story Building Exercise</h3>
+                    <p class="text-gray-600 mb-6 text-center">Drag and drop the story elements to create a coherent narrative structure.</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4 text-gray-700">Story Elements</h4>
+                            <div class="space-y-3" id="story-elements">
+                                <div class="draggable bg-blue-100 p-3 rounded-lg border border-blue-200" draggable="true" data-element="character">
+                                    <i class="fas fa-user mr-2 text-blue-600"></i>
+                                    <strong>Character:</strong> A curious young scientist
+                                </div>
+                                <div class="draggable bg-green-100 p-3 rounded-lg border border-green-200" draggable="true" data-element="setting">
+                                    <i class="fas fa-map-marker-alt mr-2 text-green-600"></i>
+                                    <strong>Setting:</strong> A mysterious laboratory
+                                </div>
+                                <div class="draggable bg-yellow-100 p-3 rounded-lg border border-yellow-200" draggable="true" data-element="conflict">
+                                    <i class="fas fa-exclamation-triangle mr-2 text-yellow-600"></i>
+                                    <strong>Conflict:</strong> An experiment goes wrong
+                                </div>
+                                <div class="draggable bg-purple-100 p-3 rounded-lg border border-purple-200" draggable="true" data-element="resolution">
+                                    <i class="fas fa-lightbulb mr-2 text-purple-600"></i>
+                                    <strong>Resolution:</strong> Teamwork saves the day
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4 text-gray-700">Story Structure</h4>
+                            <div class="space-y-3">
+                                <div class="drop-zone" data-position="beginning">
+                                    <p class="text-gray-500 text-center">Drop the beginning element here</p>
+                                </div>
+                                <div class="drop-zone" data-position="middle">
+                                    <p class="text-gray-500 text-center">Drop the middle element here</p>
+                                </div>
+                                <div class="drop-zone" data-position="climax">
+                                    <p class="text-gray-500 text-center">Drop the climax element here</p>
+                                </div>
+                                <div class="drop-zone" data-position="end">
+                                    <p class="text-gray-500 text-center">Drop the ending element here</p>
+                                </div>
+                            </div>
+                            <button id="check-story" class="mt-4 bg-indigo-500 text-white px-6 py-2 rounded-lg hover:bg-indigo-600 transition-colors w-full">
+                                Check My Story
+                            </button>
+                            <div id="story-feedback" class="mt-4 p-4 rounded-lg hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research and Engagement Platform -->
+        <section id="research" class="py-20 clean-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Join Our Research</h2>
+                    <p class="mt-4 text-base text-gray-600">Be part of groundbreaking research in AI-powered education and help shape the future of digital storytelling in learning.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Research Opportunities</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-emerald-100 rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-microscope text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-800">Participate in Studies</h4>
+                                    <p class="text-gray-600">Join our research studies to help us understand how AI can best support creative learning processes.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-cyan-100 rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-users text-cyan-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-800">Collaborate with Researchers</h4>
+                                    <p class="text-gray-600">Work directly with our research team to develop new methodologies and tools for AI-enhanced education.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-indigo-100 rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-chart-line text-indigo-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-800">Share Your Data</h4>
+                                    <p class="text-gray-600">Contribute anonymized learning data to help improve AI tools for educational purposes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-emerald-50 to-cyan-50 rounded-2xl p-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Get Involved</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Research Interest</label>
+                                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                    <option>Participate in Studies</option>
+                                    <option>Collaborate on Research</option>
+                                    <option>Data Contribution</option>
+                                    <option>General Inquiry</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-emerald-500 text-white font-bold py-3 rounded-lg hover:bg-emerald-600 transition-colors">
+                                Join Research Program
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Community -->
+        <section id="community" class="py-20 slate-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Learning Community</h2>
+                    <p class="mt-4 text-base text-gray-600">Connect with fellow learners, share your stories, and collaborate on exciting projects.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="feature-card blue-glow">
+                        <div class="text-center">
+                            <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-comments text-blue-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Discussion Forums</h3>
+                            <p class="text-gray-600 mb-4">Engage in meaningful discussions about AI, storytelling, and creative learning with peers and experts.</p>
+                        </div>
+                        <button class="content-type-btn w-full">
+                            <i class="fas fa-arrow-right"></i>
+                            Join Discussions
+                        </button>
+                    </div>
+
+                    <div class="feature-card emerald-glow">
+                        <div class="text-center">
+                            <div class="bg-emerald-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-share-alt text-emerald-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Story Sharing</h3>
+                            <p class="text-gray-600 mb-4">Share your AI-assisted stories and get feedback from the community to improve your skills.</p>
+                        </div>
+                        <button class="content-type-btn w-full">
+                            <i class="fas fa-arrow-right"></i>
+                            Share Stories
+                        </button>
+                    </div>
+
+                    <div class="feature-card cyan-glow">
+                        <div class="text-center">
+                            <div class="bg-cyan-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-handshake text-cyan-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Collaborative Projects</h3>
+                            <p class="text-gray-600 mb-4">Work together on group storytelling projects and learn from diverse perspectives and approaches.</p>
+                        </div>
+                        <button class="content-type-btn w-full">
+                            <i class="fas fa-arrow-right"></i>
+                            Start Collaborating
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 clean-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Get in Touch</h2>
+                    <p class="mt-4 text-base text-gray-600">Have questions about our project or want to learn more? We'd love to hear from you.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-emerald-100 rounded-full w-12 h-12 flex items-center justify-center">
+                                    <i class="fas fa-envelope text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-800">Email</p>
+                                    <p class="text-gray-600">genaidst@example.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-cyan-100 rounded-full w-12 h-12 flex items-center justify-center">
+                                    <i class="fas fa-university text-cyan-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-800">Institution</p>
+                                    <p class="text-gray-600">Educational Research Institute</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-indigo-100 rounded-full w-12 h-12 flex items-center justify-center">
+                                    <i class="fas fa-globe text-indigo-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-800">Location</p>
+                                    <p class="text-gray-600">Hong Kong & International</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Send us a Message</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                <textarea rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-emerald-500 text-white font-bold py-3 rounded-lg hover:bg-emerald-600 transition-colors">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">
+                        <span class="text-emerald-400">GenAI-DST</span> for ELE
+                    </h3>
+                    <p class="text-gray-400 text-sm">
+                        Empowering English language education through generative AI-powered digital storytelling.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#home" class="hover:text-emerald-400 transition-colors">Home</a></li>
+                        <li><a href="#project-framework" class="hover:text-emerald-400 transition-colors">Framework</a></li>
+                        <li><a href="#hub" class="hover:text-emerald-400 transition-colors">Learning Hub</a></li>
+                        <li><a href="#research" class="hover:text-emerald-400 transition-colors">Research</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Community</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#community" class="hover:text-emerald-400 transition-colors">Discussion Forums</a></li>
+                        <li><a href="#community" class="hover:text-emerald-400 transition-colors">Story Sharing</a></li>
+                        <li><a href="#community" class="hover:text-emerald-400 transition-colors">Collaborative Projects</a></li>
+                        <li><a href="#contact" class="hover:text-emerald-400 transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2024 GenAI-DST for ELE Project. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            // Implementation for mobile menu toggle
+            console.log('Mobile menu toggled');
+        }
+
+        // Accordion functionality
+        function toggleAccordion(button) {
+            const accordionItem = button.closest('.accordion-item');
+            const content = accordionItem.querySelector('.accordion-content');
+            const isActive = accordionItem.classList.contains('active');
+
+            // Close all accordion items
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                accordionItem.classList.add('active');
+            }
+        }
+
+        // Content type button functionality
+        function showContent(type) {
+            console.log('Showing content for:', type);
+            // Implementation for showing different content types
+        }
+
+        // Drag and drop functionality for story exercise
+        let draggedElement = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const draggables = document.querySelectorAll('.draggable');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', function(e) {
+                    draggedElement = this;
+                    this.style.opacity = '0.5';
+                });
+
+                draggable.addEventListener('dragend', function(e) {
+                    this.style.opacity = '';
+                    draggedElement = null;
+                });
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragleave', function(e) {
+                    this.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    
+                    if (draggedElement) {
+                        // Clear previous content
+                        this.innerHTML = '';
+                        // Add the dragged element
+                        this.appendChild(draggedElement.cloneNode(true));
+                        // Remove the original element
+                        draggedElement.remove();
+                    }
+                });
+            });
+
+            // Check story button functionality
+            document.getElementById('check-story').addEventListener('click', function() {
+                const dropZones = document.querySelectorAll('.drop-zone');
+                const feedback = document.getElementById('story-feedback');
+                let correctPlacements = 0;
+                let totalPlacements = 0;
+
+                const correctOrder = {
+                    'beginning': 'setting',
+                    'middle': 'character',
+                    'climax': 'conflict',
+                    'end': 'resolution'
+                };
+
+                dropZones.forEach(zone => {
+                    const position = zone.dataset.position;
+                    const element = zone.querySelector('.draggable');
+                    
+                    if (element) {
+                        totalPlacements++;
+                        const elementType = element.dataset.element;
+                        
+                        if (correctOrder[position] === elementType) {
+                            correctPlacements++;
+                            zone.classList.add('correct');
+                            zone.classList.remove('incorrect');
+                        } else {
+                            zone.classList.add('incorrect');
+                            zone.classList.remove('correct');
+                        }
+                    }
+                });
+
+                // Show feedback
+                feedback.classList.remove('hidden');
+                if (correctPlacements === 4) {
+                    feedback.className = 'mt-4 p-4 rounded-lg bg-green-100 border border-green-200 text-green-800';
+                    feedback.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Excellent! You\'ve created a perfect story structure!';
+                } else if (correctPlacements >= 2) {
+                    feedback.className = 'mt-4 p-4 rounded-lg bg-yellow-100 border border-yellow-200 text-yellow-800';
+                    feedback.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Good effort! Try rearranging some elements for better flow.';
+                } else {
+                    feedback.className = 'mt-4 p-4 rounded-lg bg-red-100 border border-red-200 text-red-800';
+                    feedback.innerHTML = '<i class="fas fa-times-circle mr-2"></i>Keep trying! Think about the logical flow of a story.';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
