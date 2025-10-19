@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenAI-DST for ELE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
+        .gradient-text { background: linear-gradient(to right, #10b981, #06b6d4, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .feature-card { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); transition: transform 0.3s ease; border: 1px solid #e5e7eb; }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .accordion-item { border: 1px solid #e2e8f0; transition: all 0.3s ease; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .accordion-item.active .accordion-content { max-height: 600px; overflow-y: auto; }
+        .draggable { cursor: move; transition: transform 0.2s ease; }
+        .drop-zone { min-height: 100px; border: 2px dashed #d1d5db; border-radius: 0.5rem; padding: 1rem; transition: all 0.3s ease; }
+        .drop-zone.drag-over { border-color: #3b82f6; background-color: #eff6ff; }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-bold text-gray-800">
+                    <span class="text-emerald-500">GenAI-DST</span> for ELE
+                </div>
+                <nav class="hidden md:flex space-x-8 text-gray-600 font-medium">
+                    <a href="#home" class="hover:text-emerald-500 transition-colors">Home</a>
+                    <a href="#hub" class="hover:text-emerald-500 transition-colors">Learning Hub</a>
+                    <a href="#research" class="hover:text-emerald-500 transition-colors">Join Research</a>
+                    <a href="#community" class="hover:text-emerald-500 transition-colors">Community</a>
+                    <a href="#contact" class="hover:text-emerald-500 transition-colors">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section id="home" class="py-20 md:py-32 bg-gradient-to-br from-blue-50 to-indigo-100">
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+                        Empowering <span class="gradient-text">English Language Education</span><br>through <span class="gradient-text">Generative AI-powered Digital Storytelling</span>
+                    </h1>
+                    <p class="mt-6 text-base text-gray-600 max-w-xl mx-auto md:mx-0">
+                        A research-practice collaborative project aimed at empowering primary and secondary students in Hong Kong and overseas. We are committed to fostering students' <strong class="text-emerald-600">creative autonomy</strong>, <strong class="text-cyan-600">critical AI literacy</strong>, and <strong class="text-indigo-600">English narrative literacy</strong> through creative storytelling.
+                    </p>
+                    <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#project-framework" class="bg-indigo-500 text-white font-bold px-8 py-3 rounded-lg hover:bg-indigo-600 transition-transform transform hover:scale-105 shadow-lg">Project Framework</a>
+                        <a href="#hub" class="bg-emerald-500 text-white font-bold px-8 py-3 rounded-lg hover:bg-emerald-600 transition-transform transform hover:scale-105 shadow-lg">Explore Learning Hub</a>
+                        <a href="#research" class="bg-white text-gray-700 font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors border border-gray-300 shadow-sm">Join Our Research</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Framework Section -->
+        <section id="project-framework" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Project Framework</h2>
+                    <p class="mt-4 text-base text-gray-600">A comprehensive theoretical framework integrating digital storytelling principles with AI collaboration and value-based education capabilities.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="text-center mb-8 px-8 py-12">
+                            <div class="bg-white rounded-xl shadow-sm p-8 mx-auto max-w-5xl">
+                                <img src="GEN-DST PROJECT Theoretical framework1010.png" alt="Theoretical Framework Diagram" class="mx-auto rounded-lg shadow-lg max-w-full h-auto" style="padding: 2rem;">
+                                <p class="mt-6 text-sm text-gray-600">Project Theoretical Framework Diagram</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- Basic Concepts -->
+                            <div class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+                                <button class="accordion-header w-full text-left p-6 flex justify-between items-center bg-gray-100 hover:bg-gray-200 transition duration-300">
+                                    <h2 class="text-xl font-semibold text-gray-800"><i class="fas fa-book-open mr-3 text-gray-600"></i>Basic Concepts: AI, Large Language Models, and Digital Storytelling</h2>
+                                    <span class="text-2xl text-gray-600 transform transition-transform duration-300">&#9662;</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="p-6 bg-gray-50">
+                                        <div class="grid md:grid-cols-3 gap-6">
+                                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                                <h3 class="font-semibold text-emerald-600 mb-2">Artificial Intelligence (AI)</h3>
+                                                <p class="text-sm text-gray-600">Computer systems that can perform tasks typically requiring human intelligence, including learning, reasoning, and problem-solving.</p>
+                                            </div>
+                                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                                <h3 class="font-semibold text-cyan-600 mb-2">Large Language Models (LLMs)</h3>
+                                                <p class="text-sm text-gray-600">AI systems trained on vast amounts of text data to understand and generate human-like language for various applications.</p>
+                                            </div>
+                                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                                <h3 class="font-semibold text-indigo-600 mb-2">Digital Storytelling</h3>
+                                                <p class="text-sm text-gray-600">The practice of using digital tools and multimedia elements to create and share personal or fictional narratives.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Hub Section -->
+        <section id="hub" class="py-20 bg-gradient-to-br from-emerald-50 to-cyan-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Learning Hub</h2>
+                    <p class="mt-4 text-base text-gray-600">Interactive learning experiences designed to develop AI literacy and digital storytelling skills.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-16">
+                    <!-- AI Learning Companion -->
+                    <div class="feature-card emerald-glow">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-emerald-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-robot text-emerald-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900">AI Learning Companion</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">Your personal AI assistant to guide you through the digital storytelling process, providing tips, feedback, and creative suggestions.</p>
+                        <button class="bg-emerald-500 text-white px-6 py-2 rounded-lg hover:bg-emerald-600 transition-colors">Start Learning</button>
+                    </div>
+
+                    <!-- Interactive Guide -->
+                    <div class="feature-card cyan-glow">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-cyan-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-map text-cyan-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900">Interactive Guide</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">Step-by-step interactive tutorials covering the 5-phase digital storytelling process with hands-on exercises and real-time feedback.</p>
+                        <button class="bg-cyan-500 text-white px-6 py-2 rounded-lg hover:bg-cyan-600 transition-colors">Explore Guide</button>
+                    </div>
+                </div>
+
+                <!-- Interactive Guide Section -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h3 class="text-2xl font-bold text-center text-gray-900 mb-8">AI Digital Story Creation Process</h3>
+                    
+                    <!-- Phase Overview -->
+                    <div class="grid md:grid-cols-5 gap-4 mb-12">
+                        <div class="text-center p-4 bg-emerald-50 rounded-lg">
+                            <div class="bg-emerald-500 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2 text-lg font-bold">1</div>
+                            <h4 class="font-semibold text-emerald-700">Story Ideation</h4>
+                            <p class="text-xs text-gray-600 mt-1">Concept & Script</p>
+                        </div>
+                        <div class="text-center p-4 bg-cyan-50 rounded-lg">
+                            <div class="bg-cyan-500 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2 text-lg font-bold">2</div>
+                            <h4 class="font-semibold text-cyan-700">Visualization</h4>
+                            <p class="text-xs text-gray-600 mt-1">Text-to-Image</p>
+                        </div>
+                        <div class="text-center p-4 bg-indigo-50 rounded-lg">
+                            <div class="bg-indigo-500 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2 text-lg font-bold">3</div>
+                            <h4 class="font-semibold text-indigo-700">Animation</h4>
+                            <p class="text-xs text-gray-600 mt-1">Image-to-Video</p>
+                        </div>
+                        <div class="text-center p-4 bg-purple-50 rounded-lg">
+                            <div class="bg-purple-500 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2 text-lg font-bold">4</div>
+                            <h4 class="font-semibold text-purple-700">Audio</h4>
+                            <p class="text-xs text-gray-600 mt-1">Sound & Voice</p>
+                        </div>
+                        <div class="text-center p-4 bg-pink-50 rounded-lg">
+                            <div class="bg-pink-500 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2 text-lg font-bold">5</div>
+                            <h4 class="font-semibold text-pink-700">Final Output</h4>
+                            <p class="text-xs text-gray-600 mt-1">Edit & Export</p>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Exercise -->
+                    <div class="bg-gray-50 rounded-xl p-6">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Interactive Exercise: Story Elements Drag & Drop</h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h5 class="font-medium text-gray-700 mb-3">Story Elements</h5>
+                                <div class="space-y-2" id="story-elements">
+                                    <div class="draggable bg-emerald-100 text-emerald-800 px-3 py-2 rounded-lg cursor-move" data-element="character">🧑‍🎓 Main Character</div>
+                                    <div class="draggable bg-cyan-100 text-cyan-800 px-3 py-2 rounded-lg cursor-move" data-element="setting">🏫 Setting</div>
+                                    <div class="draggable bg-indigo-100 text-indigo-800 px-3 py-2 rounded-lg cursor-move" data-element="conflict">⚡ Conflict</div>
+                                    <div class="draggable bg-purple-100 text-purple-800 px-3 py-2 rounded-lg cursor-move" data-element="resolution">✨ Resolution</div>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-700 mb-3">Story Structure</h5>
+                                <div class="space-y-3">
+                                    <div class="drop-zone" data-target="character">
+                                        <p class="text-gray-500 text-sm">Drop the main character here</p>
+                                    </div>
+                                    <div class="drop-zone" data-target="setting">
+                                        <p class="text-gray-500 text-sm">Drop the setting here</p>
+                                    </div>
+                                    <div class="drop-zone" data-target="conflict">
+                                        <p class="text-gray-500 text-sm">Drop the conflict here</p>
+                                    </div>
+                                    <div class="drop-zone" data-target="resolution">
+                                        <p class="text-gray-500 text-sm">Drop the resolution here</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <button onclick="resetStoryExercise()" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">Reset</button>
+                            <div id="story-feedback" class="feedback-message"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research & Engagement Platform -->
+        <section id="research" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Research & Engagement Platform</h2>
+                    <p class="mt-4 text-base text-gray-600">Join our collaborative research initiative to advance AI-powered education.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="feature-card text-center">
+                        <div class="bg-emerald-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-users text-emerald-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Participate in Research</h3>
+                        <p class="text-gray-600 text-sm">Contribute to groundbreaking research on AI in education through surveys, interviews, and case studies.</p>
+                    </div>
+
+                    <div class="feature-card text-center">
+                        <div class="bg-cyan-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-cyan-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Student Workshops</h3>
+                        <p class="text-gray-600 text-sm">Hands-on workshops for students to explore AI-powered digital storytelling techniques.</p>
+                    </div>
+
+                    <div class="feature-card text-center">
+                        <div class="bg-indigo-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-chalkboard-teacher text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Teacher Training</h3>
+                        <p class="text-gray-600 text-sm">Professional development programs for educators to integrate AI tools into their teaching practice.</p>
+                    </div>
+
+                    <div class="feature-card text-center">
+                        <div class="bg-purple-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-chart-line text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Impact Studies</h3>
+                        <p class="text-gray-600 text-sm">Longitudinal studies measuring the impact of AI-powered digital storytelling on learning outcomes.</p>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="mt-16 max-w-2xl mx-auto bg-gray-50 rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-6 text-center">Join Our Research Community</h3>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                    <option>Student</option>
+                                    <option>Teacher</option>
+                                    <option>Researcher</option>
+                                    <option>Parent</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Interest Areas</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center"><input type="checkbox" class="mr-2"> AI in Education</label>
+                                <label class="flex items-center"><input type="checkbox" class="mr-2"> Digital Storytelling</label>
+                                <label class="flex items-center"><input type="checkbox" class="mr-2"> Teacher Training</label>
+                                <label class="flex items-center"><input type="checkbox" class="mr-2"> Student Workshops</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-emerald-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-emerald-600 transition-colors">Join Research</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Community -->
+        <section id="community" class="py-20 bg-gradient-to-br from-indigo-50 to-purple-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Learning Community</h2>
+                    <p class="mt-4 text-base text-gray-600">Connect with educators, students, and researchers from around the world.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Discussion Forums -->
+                    <div class="feature-card">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-indigo-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-comments text-indigo-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900">Discussion Forums</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">Engage in meaningful discussions about AI in education, share experiences, and get support from the community.</p>
+                        <div class="space-y-2 text-sm text-gray-500">
+                            <div class="flex justify-between"><span>Latest: AI Ethics in Classroom</span><span>2h ago</span></div>
+                            <div class="flex justify-between"><span>Popular: Best Prompting Techniques</span><span>1d ago</span></div>
+                            <div class="flex justify-between"><span>Help: Technical Support</span><span>3d ago</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Showcase Gallery -->
+                    <div class="feature-card">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-cyan-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-images text-cyan-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900">Showcase Gallery</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">Discover amazing digital stories created by students and educators using AI tools.</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="bg-gray-200 rounded-lg h-20 flex items-center justify-center text-gray-500 text-xs">Story Preview</div>
+                            <div class="bg-gray-200 rounded-lg h-20 flex items-center justify-center text-gray-500 text-xs">Story Preview</div>
+                            <div class="bg-gray-200 rounded-lg h-20 flex items-center justify-center text-gray-500 text-xs">Story Preview</div>
+                            <div class="bg-gray-200 rounded-lg h-20 flex items-center justify-center text-gray-500 text-xs">Story Preview</div>
+                        </div>
+                    </div>
+
+                    <!-- Events & Workshops -->
+                    <div class="feature-card">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-calendar text-purple-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900">Events & Workshops</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">Join upcoming events, workshops, and webinars to enhance your skills and knowledge.</p>
+                        <div class="space-y-3">
+                            <div class="bg-purple-50 p-3 rounded-lg">
+                                <div class="font-medium text-purple-800">AI Storytelling Workshop</div>
+                                <div class="text-sm text-purple-600">Dec 15, 2024 • Online</div>
+                            </div>
+                            <div class="bg-indigo-50 p-3 rounded-lg">
+                                <div class="font-medium text-indigo-800">Teacher Training Session</div>
+                                <div class="text-sm text-indigo-600">Dec 22, 2024 • Hybrid</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Contact Us</h2>
+                    <p class="mt-4 text-base text-gray-600">Get in touch to learn more about our research or to participate in our studies.</p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div class="space-y-8">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-emerald-100 p-3 rounded-lg">
+                                    <i class="fas fa-envelope text-emerald-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Email</h3>
+                                    <p class="text-gray-600">xxt.ai.research@gmail.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-cyan-100 p-3 rounded-lg">
+                                    <i class="fas fa-university text-cyan-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Institution</h3>
+                                    <p class="text-gray-600">The University of Hong Kong</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-indigo-100 p-3 rounded-lg">
+                                    <i class="fas fa-map-marker-alt text-indigo-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Location</h3>
+                                    <p class="text-gray-600">Hong Kong SAR, China</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-2xl shadow-xl p-8">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-6">Send us a message</h3>
+                            <form class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                    <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                    <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"></textarea>
+                                </div>
+                                <button type="submit" class="w-full bg-emerald-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-emerald-600 transition-colors">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="text-xl font-bold mb-4">
+                        <span class="text-emerald-400">GenAI-DST</span> for ELE
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        Empowering English Language Education through Generative AI-powered Digital Storytelling.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-emerald-400 transition-colors">Home</a></li>
+                        <li><a href="#hub" class="hover:text-emerald-400 transition-colors">Learning Hub</a></li>
+                        <li><a href="#research" class="hover:text-emerald-400 transition-colors">Research</a></li>
+                        <li><a href="#community" class="hover:text-emerald-400 transition-colors">Community</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>xxt.ai.research@gmail.com</li>
+                        <li>The University of Hong Kong</li>
+                        <li>Hong Kong SAR, China</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 GenAI-DST for ELE Project. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // Close all accordion items
+                document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Drag and Drop functionality for story exercise
+        let draggedElement = null;
+
+        function initStoryExercise() {
+            const draggables = document.querySelectorAll('.draggable');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', (e) => {
+                    draggedElement = e.target;
+                    e.target.style.opacity = '0.5';
+                });
+
+                draggable.addEventListener('dragend', (e) => {
+                    e.target.style.opacity = '1';
+                });
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    
+                    if (draggedElement) {
+                        const targetType = zone.dataset.target;
+                        const elementType = draggedElement.dataset.element;
+                        
+                        if (targetType === elementType) {
+                            zone.innerHTML = draggedElement.outerHTML;
+                            zone.classList.add('correct');
+                            draggedElement.style.display = 'none';
+                            checkStoryCompletion();
+                        } else {
+                            zone.classList.add('incorrect');
+                            setTimeout(() => zone.classList.remove('incorrect'), 1000);
+                        }
+                    }
+                });
+            });
+        }
+
+        function checkStoryCompletion() {
+            const correctZones = document.querySelectorAll('.drop-zone.correct');
+            const feedback = document.getElementById('story-feedback');
+            
+            if (correctZones.length === 4) {
+                feedback.textContent = 'Excellent! You\'ve correctly structured the story elements.';
+                feedback.className = 'feedback-message feedback-correct';
+            }
+        }
+
+        function resetStoryExercise() {
+            // Reset drop zones
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.className = 'drop-zone';
+                zone.innerHTML = '<p class="text-gray-500 text-sm">' + zone.querySelector('p').textContent + '</p>';
+            });
+            
+            // Show all draggable elements
+            document.querySelectorAll('.draggable').forEach(element => {
+                element.style.display = 'block';
+            });
+            
+            // Clear feedback
+            document.getElementById('story-feedback').className = 'feedback-message';
+            document.getElementById('story-feedback').textContent = '';
+        }
+
+        // Initialize exercises when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initStoryExercise();
+        });
+    </script>
+</body>
+</html>
