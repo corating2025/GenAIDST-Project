@@ -1,49 +1,39 @@
-// 测试答案检查功能的脚本
-console.log('Testing answer checking functionality...');
-
-// 模拟在浏览器控制台中运行的测试
+// Test function for answer checking functionality
 function testAnswerCheck() {
-    // 检查drop zones数量
-    const dropZones = document.querySelectorAll('#descriptions .drop-zone');
-    console.log('Drop zones found:', dropZones.length);
+    console.log('Testing answer checking functionality...');
     
-    // 检查是否有拖拽的元素
-    let correctCount = 0;
+    // Log all drop zones
+    const dropZones = document.querySelectorAll('.drop-zone');
+    console.log('Drop zones found:', dropZones.length);
     dropZones.forEach((zone, index) => {
-        const droppedEl = zone.querySelector('.draggable');
-        const correctId = zone.dataset.correctId;
-        const droppedId = droppedEl ? droppedEl.id : null;
-        
-        console.log(`Zone ${index}: correctId=${correctId}, droppedId=${droppedId}`);
-        
-        if (droppedEl && droppedEl.id === zone.dataset.correctId) {
-            correctCount++;
-        }
+        console.log(`Drop zone ${index}:`, zone.id, zone.dataset.correct);
     });
     
-    console.log('Correct count:', correctCount);
+    // Log all draggable elements
+    const draggables = document.querySelectorAll('.draggable');
+    console.log('Draggable elements found:', draggables.length);
+    draggables.forEach((element, index) => {
+        console.log(`Draggable ${index}:`, element.id, element.textContent.trim());
+    });
     
-    // 检查elementsData是否可用
-    if (typeof elementsData !== 'undefined') {
-        console.log('elementsData length:', elementsData.length);
-    } else {
-        console.log('elementsData is not defined');
-    }
-    
-    // 检查反馈元素
-    const feedbackEl = document.getElementById('elements-feedback');
-    if (feedbackEl) {
-        console.log('Feedback element found');
-        console.log('Current feedback text:', feedbackEl.textContent);
-        console.log('Current feedback class:', feedbackEl.className);
-    } else {
-        console.log('Feedback element not found');
-    }
-    
-    return {
-        dropZonesCount: dropZones.length,
-        correctCount: correctCount,
-        elementsDataLength: typeof elementsData !== 'undefined' ? elementsData.length : 'undefined',
-        feedbackExists: !!feedbackEl
+    // Log correct IDs
+    const correctIds = {
+        'drop-zone-1': 'drag-item-1',
+        'drop-zone-2': 'drag-item-2',
+        'drop-zone-3': 'drag-item-3'
     };
+    console.log('Correct mappings:', correctIds);
+    
+    // Log feedback elements
+    const feedbackElements = document.querySelectorAll('.feedback-message');
+    console.log('Feedback elements found:', feedbackElements.length);
+    
+    console.log('Test completed. Check console for details.');
+}
+
+// Auto-run test when page loads
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', testAnswerCheck);
+} else {
+    testAnswerCheck();
 }
